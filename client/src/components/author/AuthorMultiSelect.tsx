@@ -1,12 +1,17 @@
-import { Author } from '@/../common/build';
-import { useGetAuthorsQuery } from '@/store/author';
-import { FormHelperText } from '@material-ui/core';
+import { useGetAuthorsQuery } from '@/store/api';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React, { Fragment } from 'react';
-import { WrappedFieldProps } from 'redux-form';
+import { Author } from 'common';
+import React, { Fragment, useEffect } from 'react';
+import {
+  DeepMap,
+  FieldError,
+  NestedValue,
+  UseFormRegister,
+  UseFormSetValue,
+} from 'react-hook-form';
 
 const useStyles = makeStyles({
   option: {
@@ -18,21 +23,21 @@ const useStyles = makeStyles({
   },
 });
 
-export default function AuthorSelect({
-  input,
-  meta: { touched, error },
-}: WrappedFieldProps) {
+type Props = {
+  register: UseFormRegister<Partial<{ authors: NestedValue<Author[]> }>>;
+  setValue: UseFormSetValue<Partial<{ authors: NestedValue<Author[]> }>>;
+  errors: DeepMap<{ authors: NestedValue<Author[]> }, FieldError>;
+};
+
+const AuthorMultiSelect = ({ register, setValue, errors }: Props) => {
   const classes = useStyles();
-  const { onChange } = input;
   const { data, isFetching } = useGetAuthorsQuery('');
 
-  const renderFromHelper = () => {
-    if (!(touched && error)) {
-      return;
-    } else {
-      return <FormHelperText>{touched && error}</FormHelperText>;
-    }
-  };
+  useEffect(() => {
+    register('authors', {
+      validate: (value) => value?.length || ('This is required.' as any),
+    });
+  }, [register]);
 
   return isFetching ? (
     <CircularProgress />
@@ -40,20 +45,16 @@ export default function AuthorSelect({
     <Fragment>
       <Autocomplete
         multiple
-        style={{ width: 300 }}
+        fullWidth
         limitTags={3}
         id="author-select"
         options={data}
-        value={input.value || []}
-        onChange={(_, newValue: Author[] | null) => {
-          console.log(newValue);
-          onChange(newValue);
-        }}
+        onChange={(e, options) => setValue('authors', options)}
+        getOptionLabel={(option: Author) => option.name}
         classes={{
           option: classes.option,
         }}
         autoHighlight
-        getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -63,10 +64,13 @@ export default function AuthorSelect({
               ...params.inputProps,
               autoComplete: 'new-password', // disable autocomplete and autofill
             }}
+            error={Boolean(errors?.authors)}
+            helperText={errors?.authors?.message}
           />
         )}
       />
-      {renderFromHelper()}
     </Fragment>
   ) : null;
-}
+};
+
+export default AuthorMultiSelect;

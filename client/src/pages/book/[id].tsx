@@ -2,7 +2,7 @@ import { BookViewCard } from '@/components/book';
 import BookSlider from '@/components/book/BookSlider/BookSlider';
 import { BookViewDetails } from '@/components/book/BookViewDetails';
 import { Page, SpacingPaper } from '@/components/shared';
-import { useViewBookQuery } from '@/store/book';
+import { useViewBookQuery } from '@/store/api';
 import {
   Box,
   Breadcrumbs,

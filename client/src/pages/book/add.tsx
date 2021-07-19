@@ -1,75 +1,42 @@
-import AuthorSelect from '@/components/author/AuthorSelect';
+import AuthorMultiSelect from '@/components/author/AuthorMultiSelect';
+import CategoryMultiSelect from '@/components/category/CategoryMultiSelect';
+import PublisherSelect from '@/components/publisher/PublisherSelect';
 import { Page, SpacingPaper } from '@/components/shared';
 import {
   Box,
   Breadcrumbs,
-  FormControl,
+  Button,
   Grid,
   Link,
   TextField,
 } from '@material-ui/core';
-import { Book } from 'common';
+import { Author, Category, Publisher } from 'common';
 import Head from 'next/head';
-import React, { Fragment } from 'react';
-import {
-  Field,
-  InjectedFormProps,
-  reduxForm,
-  WrappedFieldProps,
-} from 'redux-form';
+import React, { FormEvent, Fragment } from 'react';
+import { Controller, NestedValue, useForm } from 'react-hook-form';
 
-const validate = (values: any) => {
-  const errors: any = {};
-  const requiredFields = [
-    'title',
-    'description',
-    'categories',
-    'authors',
-    'year',
-    'pages',
-    'rating',
-    'isbn10',
-    'isbn13',
-    'image',
-  ];
-  requiredFields.forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'Required';
-    }
+const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  console.log(event);
+};
+
+const defaultValues = { title: '', authors: [], categories: [], publisher: [] };
+
+const BookAddPage = () => {
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<{
+    title?: string;
+    authors?: NestedValue<Author[]>;
+    categories?: NestedValue<Category[]>;
+    publisher?: NestedValue<Publisher[]>;
+  }>({
+    defaultValues,
   });
-
-  return errors;
-};
-
-const renderTextField = ({
-  label,
-  input,
-  meta: { touched, invalid, error },
-  ...custom
-}: any) => (
-  <TextField
-    label={label}
-    placeholder={label}
-    error={touched && invalid}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-  />
-);
-
-const renderSelectField = ({ input, meta }: WrappedFieldProps) => (
-  <FormControl error={meta.touched && meta.error}>
-    <AuthorSelect input={input} meta={meta} />
-  </FormControl>
-);
-
-const onSubmit = (values: Book) => {
-  console.log(values);
-};
-
-const BookAddPage = (props: InjectedFormProps<Book>) => {
-  const { handleSubmit, pristine, reset, submitting } = props;
-
   return (
     <Fragment>
       <Head>
@@ -89,34 +56,110 @@ const BookAddPage = (props: InjectedFormProps<Book>) => {
             </Breadcrumbs>
           </Box>
           <SpacingPaper>
-            <Grid container justifyContent="center">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Box m={3}>
-                  <Field
-                    name="title"
-                    component={renderTextField}
-                    label="Title"
-                  />
-                </Box>
-                <Box m={3}>
-                  <Field
-                    name="authors"
-                    component={renderSelectField}
-                    label="Authors"
-                  />
-                </Box>
-                <div>
-                  <button type="submit">Submit</button>
-                  <button
-                    type="button"
-                    disabled={pristine || submitting}
-                    onClick={reset}
-                  >
-                    Clear Values
-                  </button>
-                </div>
-              </form>
-            </Grid>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container justifyContent="center">
+                <Grid container spacing={3}>
+                  {/* Row */}
+                  <Grid container item xs={12} spacing={3}>
+                    <Grid item xs={6}>
+                      <TextField
+                        {...register('title', {
+                          required: 'This is required.',
+                        })}
+                        error={Boolean(errors?.authors)}
+                        helperText={errors?.title?.message}
+                        variant="outlined"
+                        fullWidth
+                        label="Title"
+                      />
+                      {/* <Controller
+                        render={({ field }) => (
+                          <OutlinedInput
+                            {...field}
+                            error={Boolean(errors?.title)}
+                            fullWidth
+                          />
+                        )}
+                        name="title"
+                        control={control}
+                        rules={{ required: true }}
+                        defaultValue=""
+                      />
+                      <ErrorMessage errors={errors} name="title" /> */}
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                  </Grid>
+                  {/* Row */}
+                  <Grid container item xs={12} spacing={3}>
+                    <Grid item xs={6}>
+                      <Controller
+                        render={() => (
+                          <AuthorMultiSelect
+                            register={register}
+                            setValue={setValue}
+                            errors={errors}
+                          />
+                        )}
+                        name="authors"
+                        control={control}
+                        defaultValue={[]}
+                      />
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                  </Grid>
+                  {/* Row */}
+                  <Grid container item xs={12} spacing={3}>
+                    <Grid item xs={6}>
+                      <Controller
+                        render={() => (
+                          <CategoryMultiSelect
+                            register={register}
+                            setValue={setValue}
+                            errors={errors}
+                          />
+                        )}
+                        name="categories"
+                        control={control}
+                        defaultValue={[]}
+                      />
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                  </Grid>
+                  {/* Row */}
+                  <Grid container item xs={12} spacing={3}>
+                    <Grid item xs={6}>
+                      <Controller
+                        render={() => (
+                          <PublisherSelect
+                            register={register}
+                            setValue={setValue}
+                            errors={errors}
+                          />
+                        )}
+                        name="publisher"
+                        control={control}
+                        defaultValue={[]}
+                      />
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                  </Grid>
+                  {/* Row */}
+                  <Grid container item xs={12} spacing={3}>
+                    <Grid item xs={6}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        style={{ marginTop: 16, width: '200px' }}
+                      >
+                        Save
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}></Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </form>
           </SpacingPaper>
         </Page.Content>
       </Page>
@@ -124,9 +167,4 @@ const BookAddPage = (props: InjectedFormProps<Book>) => {
   );
 };
 
-export default reduxForm<Book>({
-  form: 'BookAddPage', // a unique identifier for this form
-  validate,
-  destroyOnUnmount: false,
-  forceUnregisterOnUnmount: true,
-})(BookAddPage);
+export default BookAddPage;

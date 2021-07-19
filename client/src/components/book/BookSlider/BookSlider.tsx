@@ -1,5 +1,5 @@
 import { Book, BookFilterEnum } from '@/../common/build';
-import { useSearchBooksQuery } from '@/store/book';
+import { useSearchBooksQuery } from '@/store/api';
 import { Box } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { chunk } from 'lodash';

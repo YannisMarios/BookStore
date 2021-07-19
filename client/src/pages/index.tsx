@@ -2,7 +2,7 @@ import { BookListItem } from '@/components/book';
 import { Search } from '@/components/search';
 import { SpacingPaper } from '@/components/shared';
 import { Page } from '@/components/shared/Page';
-import { useSearchBooksQuery } from '@/store/book';
+import { useSearchBooksQuery } from '@/store/api';
 import {
   Box,
   Breadcrumbs,

@@ -1,12 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
+  Author,
   Book,
   BookFilterArgs,
+  Category,
   PaginatedResponse,
   PaginationArgs,
+  Publisher,
 } from 'common';
 
-export const bookApi = createApi({
+export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/' }),
   endpoints: (builder) => ({
     searchBooks: builder.query<
@@ -24,7 +27,22 @@ export const bookApi = createApi({
     viewBook: builder.query<Book, { id: string }>({
       query: ({ id }) => `books/${id}`,
     }),
+    getAuthors: builder.query<Author[], string>({
+      query: () => 'authors',
+    }),
+    getCategories: builder.query<Category[], string>({
+      query: () => 'categories',
+    }),
+    getPublishers: builder.query<Publisher[], string>({
+      query: () => 'publishers',
+    }),
   }),
 });
 
-export const { useSearchBooksQuery, useViewBookQuery } = bookApi;
+export const {
+  useSearchBooksQuery,
+  useViewBookQuery,
+  useGetAuthorsQuery,
+  useGetCategoriesQuery,
+  useGetPublishersQuery,
+} = api;
