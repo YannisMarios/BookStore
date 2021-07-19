@@ -1,0 +1,23 @@
+.Banner {
+  height: 330px;
+  position: relative;
+
+  .Media {
+    background-color: white;
+    height: 100%;
+    overflow: hidden;
+
+    position: relative;
+
+    transition: 300ms;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(115%);
+    }
+  }
+
+  .BannerGrid {
+    height: 100%;
+    position: relative;
+  }
+}

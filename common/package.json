@@ -1,0 +1,22 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "Bookstore common package",
+  "main": "index.js",
+  "scripts": {
+    "clean": "del-cli ./build/*",
+    "build": "npm run clean && tsc && cpy package.json ./build"
+  },
+  "author": "Yannis Marios",
+  "license": "ISC",
+  "devDependencies": {
+    "cpy-cli": "^3.1.1",
+    "del-cli": "^4.0.1",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.171",
+    "express-validator": "^6.12.0",
+    "lodash": "^4.17.21"
+  }
+}
