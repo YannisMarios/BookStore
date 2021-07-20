@@ -1,4 +1,4 @@
-import ButtonAppBar from '@/components/shared/ButtonAppBar';
+import { ButtonAppBar } from '@/components/shared';
 import '@/styles/carousel.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
