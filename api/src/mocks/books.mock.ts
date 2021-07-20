@@ -8,6 +8,10 @@ import {
   randomPublisher,
 } from './utils';
 
+/**
+ * Utility function to generate books mock data
+ * @returns Array of Books
+ */
 export const booksMockData = (): Book[] => {
   const books: Book[] = [];
 

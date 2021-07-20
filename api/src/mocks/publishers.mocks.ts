@@ -1,6 +1,10 @@
 import { Publisher } from 'common';
 import fakerStatic from 'faker';
 
+/**
+ * Utility function to generate publishers mock data
+ * @returns Array of Publishers
+ */
 export const publishersMockData = (): Publisher[] => {
   const publishers: Publisher[] = [];
 

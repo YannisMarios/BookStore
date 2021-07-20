@@ -10,6 +10,9 @@ import {
 import fakerStatic from 'faker';
 import { booksMockData } from '../mocks/books.mock';
 
+/**
+ * The Book singleton service
+ */
 export class BookService {
   private readonly books: Book[];
   static instance: BookService;

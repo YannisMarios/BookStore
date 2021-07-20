@@ -1,6 +1,10 @@
 import { Author } from 'common';
 import fakerStatic from 'faker';
 
+/**
+ * Utility function to generate authors mock data
+ * @returns Array of Authors
+ */
 export const authorsMockData = (): Author[] => {
   const authors: Author[] = [];
 

@@ -7,6 +7,9 @@ import { showBookRouter } from './routes/book/show';
 import { indexCategoryRouter } from './routes/category';
 import { indexPublisherRouter } from './routes/publisher';
 
+/**
+ * express.js setup file
+ */
 const app = express();
 
 app.disable('x-powered-by');

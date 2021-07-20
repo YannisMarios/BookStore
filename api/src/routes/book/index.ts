@@ -4,6 +4,9 @@ import { BookService } from '../../services/book.service';
 
 const router = express.Router();
 
+/**
+ * The GET Books endpoint
+ */
 router.get('/api/books', (req: Request, res: Response) => {
   const bookService = BookService.getInstance();
   let searchTerm = '';

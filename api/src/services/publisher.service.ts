@@ -1,6 +1,9 @@
 import { Publisher } from 'common';
 import { publishersMockData } from '../mocks/publishers.mocks';
 
+/**
+ * The Publisher singleton service
+ */
 export class PublisherService {
   private readonly publishers: Publisher[];
   static instance: PublisherService;

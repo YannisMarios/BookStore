@@ -21,7 +21,6 @@ export const AuthorsList = () => {
     clearErrors,
   } = useFormContext();
 
-  // handle input change
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number

@@ -1,6 +1,10 @@
 import { Category } from 'common';
 import fakerStatic from 'faker';
 
+/**
+ * An array of categories mock data
+ * @returns Array of Categories
+ */
 export const categoriesMockData: Category[] = [
   {
     id: fakerStatic.datatype.uuid(),

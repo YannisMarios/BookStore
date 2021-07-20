@@ -1,6 +1,9 @@
 import { Author } from 'common';
 import { authorsMockData } from '../mocks/authors.mock';
 
+/**
+ * The Author singleton service
+ */
 export class AuthorService {
   private readonly authors: Author[];
   static instance: AuthorService;

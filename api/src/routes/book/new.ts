@@ -4,6 +4,9 @@ import { BookService } from '../../services/book.service';
 
 const router = express.Router();
 
+/**
+ * The POST Book endpoint
+ */
 router.post('/api/books', async (req: Request, res: Response) => {
   const book = req.body;
 

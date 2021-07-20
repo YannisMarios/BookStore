@@ -1,6 +1,9 @@
 import { Category } from 'common';
 import { categoriesMockData } from '../mocks/categories.mocks';
 
+/**
+ * The Category singleton service
+ */
 export class CategoryService {
   private readonly categories: Category[];
   static instance: CategoryService;
