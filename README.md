@@ -26,5 +26,5 @@ This project is using an express.js API to serve a BookStore application build w
 
 #### `npm run dev`
 
-Open browser at http://localhost:3000 to visit the BookStore
+Open browser at http://localhost:3000 to visit the BookStore.
 API is running on http://localhost:3001
