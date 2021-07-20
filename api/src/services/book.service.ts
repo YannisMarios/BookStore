@@ -38,7 +38,7 @@ export class BookService {
       switch (filter) {
         case BookFilterEnum.TITLE:
           filteredItems = filteredItems.filter((book: Book) =>
-            book.title.includes(searchTerm.trim())
+            book.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
           );
           break;
         case BookFilterEnum.ISBN:
@@ -52,7 +52,9 @@ export class BookService {
           filteredItems = filteredItems.filter((book: Book) => {
             if (
               book.authors.filter((author: Author) =>
-                author.name.includes(searchTerm.trim())
+                author.name
+                  .toLowerCase()
+                  .includes(searchTerm.trim().toLowerCase())
               ).length > 0
             ) {
               return book;
@@ -66,7 +68,9 @@ export class BookService {
           break;
         case BookFilterEnum.PUBLISHER:
           filteredItems = filteredItems.filter((book: Book) =>
-            book.publisher.name.includes(searchTerm.trim())
+            book.publisher.name
+              .toLowerCase()
+              .includes(searchTerm.trim().toLowerCase())
           );
           break;
         case BookFilterEnum.PAGES:
@@ -76,14 +80,18 @@ export class BookService {
           break;
         case BookFilterEnum.DESCRIPTION:
           filteredItems = filteredItems.filter((book: Book) =>
-            book.description.includes(searchTerm.trim())
+            book.description
+              .toLowerCase()
+              .includes(searchTerm.trim().toLowerCase())
           );
           break;
         case BookFilterEnum.CATEGORY:
           filteredItems = filteredItems.filter((book: Book) => {
             if (
               book.categories.filter((category: Author) =>
-                category.name.includes(searchTerm.trim())
+                category.name
+                  .toLowerCase()
+                  .includes(searchTerm.trim().toLowerCase())
               ).length > 0
             ) {
               return book;
