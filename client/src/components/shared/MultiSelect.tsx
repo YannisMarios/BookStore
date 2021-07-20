@@ -51,7 +51,7 @@ export const MultiSelect = <T extends { [key: string]: any }>({
         if (option.length > maxSelectedItems) {
           trigger(name);
         } else {
-          clearErrors();
+          clearErrors(name);
         }
       }
     },

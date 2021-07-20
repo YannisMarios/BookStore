@@ -46,7 +46,7 @@ export const SingleSelect = <T extends { [key: string]: any }>({
     (_e: unknown, option: T | null) => {
       setValue(name, option);
       if (option) {
-        clearErrors();
+        clearErrors(name);
       } else {
         trigger(name);
       }

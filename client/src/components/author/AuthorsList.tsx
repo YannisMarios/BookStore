@@ -14,16 +14,12 @@ import { useFormContext } from 'react-hook-form';
 export const AuthorsList = () => {
   const [inputList, setInputList] = useState([{ name: '' }]);
   const {
-    control,
     setValue,
     formState: { errors, dirtyFields, isSubmitted },
     watch,
     trigger,
-    register,
     clearErrors,
   } = useFormContext();
-
-  const value = watch('authors');
 
   // handle input change
   const handleInputChange = (
@@ -54,7 +50,7 @@ export const AuthorsList = () => {
     if (isSubmitted && emptyAuthor) {
       trigger('authors');
     } else {
-      clearErrors();
+      clearErrors('authors');
     }
   }, [inputList, setValue, dirtyFields, isSubmitted, trigger, clearErrors]);
 

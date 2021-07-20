@@ -45,11 +45,6 @@ export class BookService {
               book.isbn13 === searchTerm.trim()
           );
           break;
-        case BookFilterEnum.SUBTITLE:
-          filteredItems = filteredItems.filter((book: Book) =>
-            book.subtitle.includes(searchTerm.trim())
-          );
-          break;
         case BookFilterEnum.AUTHOR:
           filteredItems = filteredItems.filter((book: Book) => {
             if (
@@ -63,7 +58,7 @@ export class BookService {
           break;
         case BookFilterEnum.PUBLISHED:
           filteredItems = filteredItems.filter(
-            (book: Book) => book.published.getFullYear() === +searchTerm.trim()
+            (book: Book) => book.year === +searchTerm.trim()
           );
           break;
         case BookFilterEnum.PUBLISHER:
@@ -103,9 +98,16 @@ export class BookService {
     return getPaginatedItems(filteredItems, { pageNumber, pageSize });
   }
 
-  public addBook(book: Book): void {
+  public addBook(book: Book): string {
     book.id = fakerStatic.datatype.uuid();
+    book.authors = book.authors.map((author: Author) => ({
+      id: fakerStatic.datatype.uuid(),
+      name: author.name,
+    }));
+    book.image = 'https://source.unsplash.com/random/250x300';
     this.books.push(book);
+
+    return book.title;
   }
 
   public getBook(id: string): Book | undefined {

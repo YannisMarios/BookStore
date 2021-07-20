@@ -27,6 +27,13 @@ export const api = createApi({
     viewBook: builder.query<Book, { id: string }>({
       query: ({ id }) => `books/${id}`,
     }),
+    addBook: builder.mutation<string, Book>({
+      query: (book: Book) => ({
+        url: 'books',
+        method: 'POST',
+        body: book,
+      }),
+    }),
     getAuthors: builder.query<Author[], string>({
       query: () => 'authors',
     }),
@@ -42,6 +49,7 @@ export const api = createApi({
 export const {
   useSearchBooksQuery,
   useViewBookQuery,
+  useAddBookMutation,
   useGetAuthorsQuery,
   useGetCategoriesQuery,
   useGetPublishersQuery,
