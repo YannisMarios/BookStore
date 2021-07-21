@@ -1,6 +1,6 @@
 import { BookListItem } from '@/components/book';
 import { Search } from '@/components/search';
-import { SpacingPaper } from '@/components/shared';
+import { FullPageSpinner, SpacingPaper } from '@/components/shared';
 import { Page } from '@/components/shared/Page';
 import { useSearchBooksQuery } from '@/store/api';
 import {
@@ -11,18 +11,16 @@ import {
   Link,
   makeStyles,
 } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import { Book, BookFilterEnum, enumValues } from 'common';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import React, { ChangeEvent, Fragment, useState } from 'react';
+import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
     marginTop: '2rem',
   },
   gridItem: {
@@ -38,7 +36,8 @@ const IndexPage: NextPage = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filter, setFilter] = useState<BookFilterEnum>(BookFilterEnum.TITLE);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
+  const [isLoading, setLoading] = useState(false);
 
   const { data, isFetching } = useSearchBooksQuery({
     filters: { searchTerm, filter },
@@ -56,6 +55,10 @@ const IndexPage: NextPage = () => {
   const onPageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   return (
     <Fragment>
@@ -96,7 +99,7 @@ const IndexPage: NextPage = () => {
                 onFilterChange={onFilterChange}
               />
               {isFetching ? (
-                <CircularProgress />
+                <FullPageSpinner loading={isLoading} setLoading={setLoading} />
               ) : (
                 <div className={classes.root}>
                   <Grid container spacing={2}>
